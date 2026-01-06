@@ -26,12 +26,35 @@
 
 
   <!-- Main Content -->
-  <main class="main-content column">
-    <div id="posts-container">
-      <!-- Post cards will be injected here -->
+  <!-- Main Content -->
+<main class="main-content column">
+
+  <!-- Top Action Bar -->
+  <div class="top-bar row">
+    <input type="text" class="search-box" placeholder="Search posts...">
+    <div class="top-actions">
+      <i class="fa-regular fa-bell notification-icon" title="Notifications"></i>
+      <button class="btn create-post-btn" title="Create Post">+</button>
     </div>
-    <div id="loader" class="loader">Loading more posts...</div>
-  </main>
+  </div>
+
+  <div id="posts-container">
+    <!-- Post cards will be injected here -->
+  </div>
+  <div id="loader" class="loader">Loading more posts...</div>
+</main>
+
+<!-- Create Post Modal -->
+<div class="modal" id="createPostModal">
+  <div class="modal-content column">
+    <h3 class="heading">Create New Post</h3>
+    <textarea class="input post-desc-input" placeholder="Write something..."></textarea>
+    <input type="file" class="input post-image-input" accept="image/*">
+    <button class="btn submit-post-btn">Post</button>
+    <span class="close-modal">&times;</span>
+  </div>
+</div>
+
 
   <aside class="right-panel column">
     <div class="panel-section">

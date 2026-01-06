@@ -267,3 +267,127 @@ window.addEventListener("scroll", () => {
 });
 
 loadPostsJSON();
+
+// Modal
+const createPostBtn = document.querySelector(".create-post-btn");
+const modal = document.getElementById("createPostModal");
+const closeModal = modal.querySelector(".close-modal");
+const submitPostBtn = modal.querySelector(".submit-post-btn");
+const postDescInput = modal.querySelector(".post-desc-input");
+const postImageInput = modal.querySelector(".post-image-input");
+
+createPostBtn.addEventListener("click", () => {
+  modal.style.display = "flex";
+});
+
+closeModal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+  if(e.target === modal){
+    modal.style.display = "none";
+  }
+});
+
+// Add Post
+submitPostBtn.addEventListener("click", () => {
+  const desc = postDescInput.value.trim();
+  const imageFile = postImageInput.files[0];
+
+  if(!desc && !imageFile) return alert("Add description or image");
+
+  const postCard = document.createElement("div");
+  postCard.className = "post-card";
+  postCard.innerHTML = `
+    <div class="post-header">
+      <img src="https://picsum.photos/seed/new/100" alt="You">
+      <span class="username">You</span>
+    </div>
+    <div class="post-image">
+      ${imageFile ? `<img src="${URL.createObjectURL(imageFile)}">` : ""}
+    </div>
+    <div class="subheading post-desc">
+      ${desc}
+    </div>
+    <div class="post-actions">
+      <i class="fa-regular fa-heart like-btn"></i>
+      <i class="fa-regular fa-comment comment-btn"></i>
+      <i class="fa-regular fa-bookmark save-btn"></i>
+    </div>
+    <div class="post-stats">
+      <span class="likes-count">0</span> likes • 
+      <span class="comments-count">0</span> comments
+    </div>
+    <div class="comment-panel column" style="display:none;">
+      <div class="comments-list column"></div>
+      <input class="input comment-input" type="text" placeholder="Write a comment...">
+      <button class="btn add-comment-btn">Post</button>
+      <p class="no-comment text-sm">No comments yet</p>
+    </div>
+  `;
+
+  postsContainer.prepend(postCard); // add to top
+
+  // Reset modal
+  postDescInput.value = "";
+  postImageInput.value = "";
+  modal.style.display = "none";
+
+  // Reattach listeners for the new post
+  attachPostListeners(postCard);
+});
+
+// Function to attach likes/comments/save listeners
+function attachPostListeners(postCard){
+  const likeBtn = postCard.querySelector(".like-btn");
+  const saveBtn = postCard.querySelector(".save-btn");
+  const commentBtn = postCard.querySelector(".comment-btn");
+  const commentPanel = postCard.querySelector(".comment-panel");
+  const addCommentBtn = postCard.querySelector(".add-comment-btn");
+  const commentInput = postCard.querySelector(".comment-input");
+  const commentsList = postCard.querySelector(".comments-list");
+  const noComment = postCard.querySelector(".no-comment");
+  const likesCount = postCard.querySelector(".likes-count");
+  const commentsCount = postCard.querySelector(".comments-count");
+
+  // Like
+  likeBtn.addEventListener("click", () => {
+    likeBtn.classList.toggle("active");
+    likeBtn.style.color = likeBtn.classList.contains("active") ? "red" : "var(--primary-color)";
+    let likes = parseInt(likesCount.textContent);
+    likes = likeBtn.classList.contains("active") ? likes + 1 : likes - 1;
+    likesCount.textContent = likes;
+  });
+
+  // Save
+  saveBtn.addEventListener("click", () => {
+    saveBtn.classList.toggle("active");
+    saveBtn.style.color = saveBtn.classList.contains("active") ? "green" : "var(--primary-color)";
+  });
+
+  // Comment toggle
+  commentBtn.addEventListener("click", () => {
+    commentPanel.style.display = commentPanel.style.display === "flex" ? "none" : "flex";
+    noComment.style.display = commentsList.children.length === 0 ? "block" : "none";
+  });
+
+  // Add comment
+  addCommentBtn.addEventListener("click", () => {
+    const text = commentInput.value.trim();
+    if(text !== ""){
+      const commentEl = document.createElement("div");
+      commentEl.classList.add("comment-item");
+      commentEl.textContent = text;
+      commentsList.appendChild(commentEl);
+
+      let comments = parseInt(commentsCount.textContent);
+      comments += 1;
+      commentsCount.textContent = comments;
+
+      commentInput.value = "";
+      noComment.style.display = "none";
+    }
+  });
+}
+
