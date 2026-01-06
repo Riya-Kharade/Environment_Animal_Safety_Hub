@@ -301,6 +301,196 @@
             margin-bottom: 10px;
         }
         
+        /* ===== QUIZ STYLES ===== */
+        .quiz-section {
+            background: #f0f9ff;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+        
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-right: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            font-weight: 600;
+            color: var(--text-dark);
+            white-space: nowrap;
+        }
+        
+        .quiz-question {
+            margin-bottom: 30px;
+        }
+        
+        .quiz-question h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .quiz-options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .quiz-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 18px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .quiz-option:hover {
+            background: #e8f5e9;
+            border-color: var(--primary-light);
+        }
+        
+        .quiz-option.selected {
+            background: #e8f5e9;
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.1);
+        }
+        
+        .option-letter {
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .quiz-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .quiz-btn {
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quiz-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .quiz-btn.secondary {
+            background: #f0f0f0;
+            color: var(--text-dark);
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-btn.primary:hover {
+            background: #1b5e20;
+        }
+        
+        .quiz-btn.secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .quiz-result {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .result-icon.good {
+            color: #4caf50;
+        }
+        
+        .result-icon.average {
+            color: #ff9800;
+        }
+        
+        .result-icon.poor {
+            color: #f44336;
+        }
+        
+        .result-score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .result-message {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .result-details {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .result-details h4 {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
         /* ===== FOOTER ===== */
         footer {
             background: linear-gradient(135deg, #1b5e20, #2e7d32);
@@ -405,6 +595,15 @@
             .nav-links.active {
                 left: 0;
             }
+            
+            .quiz-buttons {
+                flex-direction: column;
+            }
+            
+            .quiz-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
         
         @media (max-width: 768px) {
@@ -423,6 +622,14 @@
             .card {
                 padding: 30px 20px;
             }
+            
+            .quiz-container {
+                padding: 25px;
+            }
+            
+            .progress-bar {
+                margin-right: 15px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -440,6 +647,10 @@
             
             .waste-examples {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .quiz-option {
+                padding: 15px;
             }
         }
     </style>
@@ -653,9 +864,77 @@
             </div>
             
             <div style="text-align: center; margin-top: 50px;" data-aos="fade-up">
-                <a href="#benefits" class="btn-custom">
-                    <i class="fas fa-arrow-down"></i> Learn Recycling Benefits
+                <a href="#quiz" class="btn-custom">
+                    <i class="fas fa-question-circle"></i> Test Your Knowledge
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="quiz-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Test Your Knowledge</span>
+                <h2 class="section-title">Dry Waste Quiz</h2>
+                <p class="section-subtitle">
+                    Take this quiz to test your understanding of dry waste segregation and recycling.
+                </p>
+            </div>
+            
+            <div class="quiz-container" data-aos="fade-up">
+                <!-- Quiz Progress -->
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span>
+                    </div>
+                </div>
+                
+                <!-- Quiz Content -->
+                <div id="quizContent">
+                    <!-- Questions will be inserted here by JavaScript -->
+                </div>
+                
+                <!-- Quiz Buttons -->
+                <div class="quiz-buttons">
+                    <button class="quiz-btn secondary" id="prevBtn" onclick="prevQuestion()" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button class="quiz-btn primary" id="nextBtn" onclick="nextQuestion()">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="quiz-btn primary" id="submitBtn" onclick="submitQuiz()" style="display: none;">
+                        <i class="fas fa-paper-plane"></i> Submit Quiz
+                    </button>
+                </div>
+                
+                <!-- Quiz Result -->
+                <div class="quiz-result" id="quizResult">
+                    <div class="result-icon good" id="resultIcon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="result-score" id="resultScore">0/5</div>
+                    <h3 id="resultTitle">Quiz Complete!</h3>
+                    <p class="result-message" id="resultMessage">
+                        You've completed the dry waste quiz. See your results below.
+                    </p>
+                    
+                    <div class="result-details" id="resultDetails">
+                        <!-- Results will be shown here -->
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <button class="quiz-btn primary" onclick="restartQuiz()">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                        <a href="#what-is-dry-waste" class="quiz-btn secondary">
+                            <i class="fas fa-book"></i> Review Material
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -856,6 +1135,273 @@
                 navToggle.classList.remove('active');
             }
         });
+        
+        // ===== QUIZ FUNCTIONALITY =====
+        
+        const quizData = [
+            {
+                question: "Which of these items is considered dry waste?",
+                options: [
+                    { text: "Banana peel", correct: false },
+                    { text: "Plastic water bottle", correct: true },
+                    { text: "Leftover food", correct: false },
+                    { text: "Tea leaves", correct: false }
+                ],
+                explanation: "Plastic water bottles are dry waste because they are non-biodegradable and recyclable. Banana peels, leftover food, and tea leaves are wet/organic waste."
+            },
+            {
+                question: "What should you do with paper before putting it in dry waste?",
+                options: [
+                    { text: "Soak it in water", correct: false },
+                    { text: "Tear it into small pieces", correct: false },
+                    { text: "Clean and dry it", correct: true },
+                    { text: "Mix it with food waste", correct: false }
+                ],
+                explanation: "Paper should be clean and dry before recycling. Wet or contaminated paper cannot be recycled properly."
+            },
+            {
+                question: "Which item requires special disposal and should NOT go in regular dry waste?",
+                options: [
+                    { text: "Glass jar", correct: false },
+                    { text: "Newspaper", correct: false },
+                    { text: "Used battery", correct: true },
+                    { text: "Plastic container", correct: false }
+                ],
+                explanation: "Used batteries are e-waste and contain hazardous materials. They should be taken to special collection centers, not put in regular dry waste."
+            },
+            {
+                question: "What percentage of energy is saved by recycling aluminum compared to making new aluminum?",
+                options: [
+                    { text: "25%", correct: false },
+                    { text: "50%", correct: false },
+                    { text: "75%", correct: false },
+                    { text: "90%", correct: true }
+                ],
+                explanation: "Recycling aluminum saves about 90% of the energy needed to make new aluminum from raw materials, making it one of the most energy-efficient recycling processes."
+            },
+            {
+                question: "How does proper dry waste segregation help the environment?",
+                options: [
+                    { text: "Increases landfill space", correct: false },
+                    { text: "Reduces pollution and conserves resources", correct: true },
+                    { text: "Makes waste collection easier", correct: false },
+                    { text: "All of the above", correct: false }
+                ],
+                explanation: "Proper segregation reduces pollution from manufacturing, conserves natural resources, saves energy, and reduces landfill waste. While it does make collection easier, that's not the primary environmental benefit."
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+        let quizCompleted = false;
+        
+        // Initialize quiz
+        function initQuiz() {
+            updateProgress();
+            displayQuestion();
+            updateButtons();
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            const quizContent = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let optionsHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            question.options.forEach((option, index) => {
+                const isSelected = userAnswers[currentQuestion] === index;
+                optionsHTML += `
+                    <div class="quiz-option ${isSelected ? 'selected' : ''}" onclick="selectOption(${index})">
+                        <div class="option-letter">${letters[index]}</div>
+                        <div>${option.text}</div>
+                    </div>
+                `;
+            });
+            
+            quizContent.innerHTML = `
+                <div class="quiz-question">
+                    <h3>${question.question}</h3>
+                </div>
+                <div class="quiz-options">
+                    ${optionsHTML}
+                </div>
+            `;
+        }
+        
+        // Select an option
+        function selectOption(optionIndex) {
+            userAnswers[currentQuestion] = optionIndex;
+            displayQuestion();
+            
+            // If this is the last question, show submit button
+            if (currentQuestion === quizData.length - 1) {
+                document.getElementById('submitBtn').style.display = 'flex';
+                document.getElementById('nextBtn').style.display = 'none';
+            }
+        }
+        
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                currentQuestion++;
+                updateProgress();
+                displayQuestion();
+                updateButtons();
+            }
+        }
+        
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateProgress();
+                displayQuestion();
+                updateButtons();
+            }
+        }
+        
+        // Update progress bar and question counter
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const currentQuestionElement = document.getElementById('currentQuestion');
+            const totalQuestionsElement = document.getElementById('totalQuestions');
+            
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            progressFill.style.width = `${progress}%`;
+            
+            currentQuestionElement.textContent = currentQuestion + 1;
+            totalQuestionsElement.textContent = quizData.length;
+        }
+        
+        // Update navigation buttons
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Show/hide previous button
+            if (currentQuestion > 0) {
+                prevBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'none';
+            }
+            
+            // Show/hide next button
+            if (currentQuestion < quizData.length - 1) {
+                nextBtn.style.display = 'flex';
+                submitBtn.style.display = 'none';
+            } else {
+                nextBtn.style.display = 'none';
+                if (userAnswers[currentQuestion] !== null) {
+                    submitBtn.style.display = 'flex';
+                }
+            }
+        }
+        
+        // Submit quiz and show results
+        function submitQuiz() {
+            if (userAnswers.includes(null)) {
+                alert('Please answer all questions before submitting!');
+                return;
+            }
+            
+            quizCompleted = true;
+            
+            // Calculate score
+            let score = 0;
+            let resultsHTML = '';
+            
+            quizData.forEach((question, index) => {
+                const userAnswerIndex = userAnswers[index];
+                const isCorrect = question.options[userAnswerIndex].correct;
+                
+                if (isCorrect) score++;
+                
+                const letters = ['A', 'B', 'C', 'D'];
+                const userAnswerLetter = letters[userAnswerIndex];
+                const correctAnswerIndex = question.options.findIndex(opt => opt.correct);
+                const correctAnswerLetter = letters[correctAnswerIndex];
+                
+                resultsHTML += `
+                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0;">
+                        <p><strong>Q${index + 1}:</strong> ${question.question}</p>
+                        <p style="color: ${isCorrect ? '#4caf50' : '#f44336'}; margin: 5px 0;">
+                            <i class="fas fa-${isCorrect ? 'check' : 'times'}"></i> 
+                            Your answer: ${userAnswerLetter}. ${question.options[userAnswerIndex].text}
+                        </p>
+                        ${!isCorrect ? `<p style="color: #4caf50; margin: 5px 0;">
+                            <i class="fas fa-check"></i> 
+                            Correct answer: ${correctAnswerLetter}. ${question.options[correctAnswerIndex].text}
+                        </p>` : ''}
+                        <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">
+                            <i class="fas fa-lightbulb"></i> ${question.explanation}
+                        </p>
+                    </div>
+                `;
+            });
+            
+            // Update result display
+            const resultScore = document.getElementById('resultScore');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultDetails = document.getElementById('resultDetails');
+            
+            resultScore.textContent = `${score}/${quizData.length}`;
+            resultDetails.innerHTML = resultsHTML;
+            
+            // Set result based on score
+            if (score === quizData.length) {
+                resultTitle.textContent = "Perfect! You're a Recycling Expert!";
+                resultMessage.textContent = "Excellent work! You have a thorough understanding of dry waste segregation and recycling practices.";
+                resultIcon.innerHTML = '<i class="fas fa-trophy"></i>';
+                resultIcon.className = 'result-icon good';
+            } else if (score >= quizData.length * 0.7) {
+                resultTitle.textContent = "Great Job!";
+                resultMessage.textContent = "Good work! You have a solid understanding of dry waste management. Review the areas you missed to become an expert.";
+                resultIcon.innerHTML = '<i class="fas fa-star"></i>';
+                resultIcon.className = 'result-icon good';
+            } else if (score >= quizData.length * 0.5) {
+                resultTitle.textContent = "Good Effort!";
+                resultMessage.textContent = "You have basic knowledge of dry waste. Review the material to improve your understanding of proper segregation.";
+                resultIcon.innerHTML = '<i class="fas fa-thumbs-up"></i>';
+                resultIcon.className = 'result-icon average';
+            } else {
+                resultTitle.textContent = "Keep Learning!";
+                resultMessage.textContent = "You're just getting started with dry waste knowledge. Review the material and try the quiz again.";
+                resultIcon.innerHTML = '<i class="fas fa-book"></i>';
+                resultIcon.className = 'result-icon poor';
+            }
+            
+            // Hide quiz content and show results
+            document.getElementById('quizContent').style.display = 'none';
+            document.querySelector('.quiz-progress').style.display = 'none';
+            document.querySelector('.quiz-buttons').style.display = 'none';
+            document.getElementById('quizResult').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('quizResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Restart quiz
+        function restartQuiz() {
+            currentQuestion = 0;
+            userAnswers = new Array(quizData.length).fill(null);
+            quizCompleted = false;
+            
+            // Reset display
+            document.getElementById('quizContent').style.display = 'block';
+            document.querySelector('.quiz-progress').style.display = 'flex';
+            document.querySelector('.quiz-buttons').style.display = 'flex';
+            document.getElementById('quizResult').style.display = 'none';
+            
+            initQuiz();
+        }
+        
+        // Initialize quiz on page load
+        document.addEventListener('DOMContentLoaded', initQuiz);
     </script>
 </body>
 </html>
