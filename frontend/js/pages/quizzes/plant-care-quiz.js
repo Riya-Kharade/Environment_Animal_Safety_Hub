@@ -67,12 +67,15 @@ function nextQuestion(){
   index++;
   index<quiz.length ? loadQuestion() : showResult();
 }
-
 function showResult(){
   clearInterval(timer);
   quizScreen.style.display="none";
   resultScreen.style.display="block";
-  score.textContent=`${score} / ${quiz.length}`;
+
+  // ADD HERE (replace old score line)
+  document.getElementById("score").textContent =
+    `You scored ${score} out of ${quiz.length}`;
+
   remark.textContent =
     score>=6 ? "🌟 Plant Care Pro!" :
     score>=4 ? "👍 Good Job!" :
