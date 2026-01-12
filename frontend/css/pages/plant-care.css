@@ -357,8 +357,8 @@ body {
 
 /* Text colors */
 .hero-text h1 {
-  color: rgb(16, 159, 71);
-  text-shadow: 2px 0 2px #ffffff;
+  color: rgb(255, 255, 255);
+  text-shadow: 0px 0 5px #ffffff;
 }
 
 .hero-text p {
