@@ -40,9 +40,41 @@ function createFloatingElements() {
 let quiz = [], index = 0, score = 0, seconds = 0, timer;
 let answers = [];
 
+// Progress Tracking
+const PROGRESS_KEY = 'quizProgress';
+
+function saveProgress() {
+    const progress = {
+        currentIndex: index,
+        answers: answers,
+        score: score,
+        remainingTime: seconds,
+        timestamp: Date.now()
+    };
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+}
+
+function loadProgress() {
+    const saved = localStorage.getItem(PROGRESS_KEY);
+    if (saved) {
+        const progress = JSON.parse(saved);
+        index = progress.currentIndex || 0;
+        answers = progress.answers || [];
+        score = progress.score || 0;
+        seconds = progress.remainingTime || 0;
+        return true;
+    }
+    return false;
+}
+
+function clearProgress() {
+    localStorage.removeItem(PROGRESS_KEY);
+}
+
 // DOM Elements
 const startScreen = document.getElementById('startScreen');
 const quizScreen = document.getElementById('quizScreen');
+const loadingScreen = document.getElementById('loadingScreen');
 const resultScreen = document.getElementById('resultScreen');
 const reviewScreen = document.getElementById('reviewScreen');
 const timeEl = document.getElementById('time');
@@ -71,6 +103,18 @@ function startQuiz() {
     startTimer();
 }
 
+function resumeQuiz() {
+    if (loadProgress()) {
+        // Restore quiz state
+        quiz = [...questions].sort(() => 0.5 - Math.random()).slice(0, 10); // Assuming same quiz for simplicity
+        startScreen.style.display = "none";
+        quizScreen.style.display = "block";
+        quizScreen.classList.add('slide-up');
+        loadQuestion();
+        startTimer();
+    }
+}
+
 function startTimer() {
     updateTime();
     timer = setInterval(() => {
@@ -94,6 +138,14 @@ function loadQuestion() {
     let q = quiz[index];
     progressEl.textContent = `Question ${index + 1} of ${quiz.length}`;
     questionEl.textContent = q.q;
+    
+    // Update progress bar
+    const progressBar = document.getElementById('progressBar');
+    if (progressBar) {
+        const progressFill = progressBar.querySelector('.progress-fill');
+        const progressPercent = ((index + 1) / quiz.length) * 100;
+        progressFill.style.width = `${progressPercent}%`;
+    }
     
     // Clear and Animate Options
     optionsEl.innerHTML = "";
@@ -141,16 +193,24 @@ function nextQuestion() {
 
 function showResult() {
     clearInterval(timer);
+    clearProgress(); // Clear progress when quiz is completed
     quizScreen.style.display = "none";
-    resultScreen.style.display = "block";
-    resultScreen.classList.add('slide-up');
-    
-    document.getElementById('finalScore').textContent = score;
-    
-    const remarkEl = document.getElementById('remark');
-    if(score >= 8) remarkEl.textContent = "🌟 Amazing! You're an Eco Hero!";
-    else if(score >= 5) remarkEl.textContent = "👍 Good Job! Keep it green!";
-    else remarkEl.textContent = "🌱 Nice try! Learn more & play again!";
+    loadingScreen.style.display = "block";
+    loadingScreen.classList.add('slide-up');
+
+    // Simulate processing time (you can adjust this duration)
+    setTimeout(() => {
+        loadingScreen.style.display = "none";
+        resultScreen.style.display = "block";
+        resultScreen.classList.add('slide-up');
+
+        document.getElementById('finalScore').textContent = score;
+
+        const remarkEl = document.getElementById('remark');
+        if(score >= 8) remarkEl.textContent = "🌟 Amazing! You're an Eco Hero!";
+        else if(score >= 5) remarkEl.textContent = "👍 Good Job! Keep it green!";
+        else remarkEl.textContent = "🌱 Nice try! Learn more & play again!";
+    }, 2000); // 2 second loading time
 }
 
 function showReview() {
