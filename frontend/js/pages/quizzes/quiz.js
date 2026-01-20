@@ -41,6 +41,47 @@ let quiz = [], index = 0, score = 0, seconds = 0, timer;
 let answers = [];
 let quizName = 'Kids Eco Quiz'; // Identify this quiz type
 
+// Audio Logic
+let isMuted = localStorage.getItem('quizAudioMuted') === 'true';
+let timerWarningPlayed = false;
+
+function playSound(soundFile) {
+    if (isMuted) return;
+    const audio = new Audio(`../../assets/audio/${soundFile}`);
+    audio.play().catch(e => console.log('Audio play failed:', e)); // Handle autoplay policies
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    localStorage.setItem('quizAudioMuted', isMuted);
+    const muteBtn = document.getElementById('muteToggle');
+    const icon = muteBtn.querySelector('i');
+    if (isMuted) {
+        icon.className = 'fa-solid fa-volume-mute';
+        muteBtn.setAttribute('aria-pressed', 'true');
+    } else {
+        icon.className = 'fa-solid fa-volume-up';
+        muteBtn.setAttribute('aria-pressed', 'false');
+    }
+}
+
+// Initialize mute button
+document.addEventListener('DOMContentLoaded', () => {
+    const muteBtn = document.getElementById('muteToggle');
+    if (muteBtn) {
+        muteBtn.addEventListener('click', toggleMute);
+        // Set initial state
+        const icon = muteBtn.querySelector('i');
+        if (isMuted) {
+            icon.className = 'fa-solid fa-volume-mute';
+            muteBtn.setAttribute('aria-pressed', 'true');
+        } else {
+            icon.className = 'fa-solid fa-volume-up';
+            muteBtn.setAttribute('aria-pressed', 'false');
+        }
+    }
+});
+
 // Progress Tracking
 const PROGRESS_KEY_PREFIX = 'quizProgress_';
 const EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -146,10 +187,19 @@ function updateTime() {
     let m = Math.floor(seconds / 60);
     let s = seconds % 60;
     timeEl.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
-    
+
     // Warning color when time is low
-    if (seconds < 30) timeEl.parentElement.style.color = 'red';
-    else timeEl.parentElement.style.color = '#f57c00';
+    if (seconds < 30) {
+        timeEl.parentElement.style.color = 'red';
+        // Play timer warning sound once
+        if (!timerWarningPlayed) {
+            playSound('timer-warning.mp3');
+            timerWarningPlayed = true;
+        }
+    } else {
+        timeEl.parentElement.style.color = '#f57c00';
+        timerWarningPlayed = false; // Reset if time increases (though unlikely)
+    }
 }
 
 function loadQuestion() {
@@ -189,7 +239,8 @@ function selectOption(el, i) {
     // Save progress after selecting an option
     saveProgress();
 
-    // Optional: Play a small click sound here
+    // Play click sound
+    playSound('click.mp3');
 }
 
 function nextQuestion() {
@@ -198,12 +249,17 @@ function nextQuestion() {
         const btn = document.querySelector('.nextBtn');
         btn.classList.add('shake-it');
         setTimeout(() => btn.classList.remove('shake-it'), 300);
-        return; 
+        return;
     }
-    
-    // Check answer immediately to calculate score
-    if (answers[index] === quiz[index].a) score++;
-    
+
+    // Check answer and play sound
+    if (answers[index] === quiz[index].a) {
+        score++;
+        playSound('correct.mp3');
+    } else {
+        playSound('incorrect.mp3');
+    }
+
     index++;
     if(index < quiz.length) {
         loadQuestion();
@@ -218,13 +274,16 @@ function showResult() {
     quizScreen.style.display = "none";
     resultScreen.style.display = "block";
     resultScreen.classList.add('slide-up');
-    
+
     document.getElementById('finalScore').textContent = score;
-    
+
     const remarkEl = document.getElementById('remark');
     if(score >= 8) remarkEl.textContent = "🌟 Amazing! You're an Eco Hero!";
     else if(score >= 5) remarkEl.textContent = "👍 Good Job! Keep it green!";
     else remarkEl.textContent = "🌱 Nice try! Learn more & play again!";
+
+    // Play completion sound
+    playSound('clap.mp3');
 }
 
 function showReview() {
