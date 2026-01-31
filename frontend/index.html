@@ -175,10 +175,10 @@
 
     /* Fix gradient text for light theme */
     body:not([data-theme="dark"]) .gradient-text {
-      background: linear-gradient(135deg, #1b5e20, #2e7d32) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      background-clip: text !important;
+      color: whitesmoke !important;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      background: none !important;
+      -webkit-text-fill-color: whitesmoke !important;
     }
 
     /* Add subtle text shadow for better contrast */
