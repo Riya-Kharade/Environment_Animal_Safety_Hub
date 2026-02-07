@@ -4,7 +4,16 @@
  */
 
 require('dotenv').config();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+// Initialize Stripe only if the secret key is provided to avoid runtime crashes
+let stripe = null;
+if (process.env.STRIPE_SECRET_KEY) {
+    stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+} else {
+    // Helpful warning for developers during local development
+    console.warn('⚠️ STRIPE_SECRET_KEY is not set. Stripe initialization skipped. Set STRIPE_SECRET_KEY in your .env to enable payments.');
+}
+
 const paypal = require('@paypal/checkout-server-sdk');
 
 // Stripe Configuration
