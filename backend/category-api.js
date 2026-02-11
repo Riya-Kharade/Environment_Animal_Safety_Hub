@@ -317,6 +317,62 @@ app.delete('/api/food-locations/:id', (req, res) => {
   res.status(204).send();
 });
 
+// Water Conservation Action Tracker API
+let waterInitiatives = [
+  {
+    id: 1,
+    name: "City Park Water-Saving Retrofit",
+    type: "water-saving",
+    region: "north",
+    lat: 34.0736,
+    lng: -118.4004,
+    info: "Low-flow irrigation installed."
+  },
+  {
+    id: 2,
+    name: "Rainwater Harvesting at Community Center",
+    type: "rainwater-harvesting",
+    region: "east",
+    lat: 34.0622,
+    lng: -118.2437,
+    info: "Rain barrels and cisterns in use."
+  },
+  {
+    id: 3,
+    name: "Drought-Resilient Garden Project",
+    type: "drought-landscaping",
+    region: "south",
+    lat: 34.0407,
+    lng: -118.2468,
+    info: "Native plants and xeriscaping."
+  }
+];
+
+app.get('/api/water-initiatives', (req, res) => {
+  res.json({ success: true, data: waterInitiatives });
+});
+
+app.post('/api/water-initiatives', (req, res) => {
+  const init = req.body;
+  init.id = waterInitiatives.length + 1;
+  waterInitiatives.push(init);
+  res.status(201).json({ success: true, data: init });
+});
+
+app.put('/api/water-initiatives/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const idx = waterInitiatives.findIndex(i => i.id === id);
+  if (idx === -1) return res.status(404).send('Not found');
+  waterInitiatives[idx] = { ...waterInitiatives[idx], ...req.body };
+  res.json({ success: true, data: waterInitiatives[idx] });
+});
+
+app.delete('/api/water-initiatives/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  waterInitiatives = waterInitiatives.filter(i => i.id !== id);
+  res.status(204).send();
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log('\n' + '='.repeat(60));
