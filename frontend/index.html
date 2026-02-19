@@ -258,9 +258,9 @@
 
           <div class="social-proof-badge glass-effect">
             <div class="avatars">
-              <span class="avatar" style="background-image: url('assets/images/others/user1.jpg');"></span>
-              <span class="avatar" style="background-image: url('assets/images/others/user2.jpg');"></span>
-              <span class="avatar" style="background-image: url('assets/images/others/user3.jpg');"></span>
+              <span class="avatar" style="background-image: url('assets/images/others/mentor1.jpg');"></span>
+              <span class="avatar" style="background-image: url('assets/images/others/mentor2.jpg');"></span>
+              <span class="avatar" style="background-image: url('assets/images/others/Animal_Environment_Photo.jpg');"></span>
             </div>
             <span class="hero-badge-text">Join <span class="highlight">50,000+</span> Eco Warriors</span>
           </div>
@@ -2747,9 +2747,7 @@
   </script>
   <script src="js/utils/touch-interaction.js">
   </script>
-  <!-- Performance monitoring (load first) -->
-  <script src="js/global/performance-monitor.js">
-  </script>
+  <!-- Performance monitoring (preload done in head) -->
   <script src="js/global/optimized-image-loader.js">
   </script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -3003,6 +3001,11 @@
         leaf.style.animationDelay = Math.random() * 10 + 's';
         layer.appendChild(leaf);
       }
+    }
+
+    function enableSunlight() {
+      const glow = document.querySelector('.sun-glow');
+      if (glow) glow.style.opacity = '1';
     }
 
     enableSunlight();
