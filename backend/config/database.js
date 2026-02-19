@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
     try {
         let dbUrl = process.env.MONGODB_URI;
 

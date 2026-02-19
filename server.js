@@ -9,8 +9,11 @@ const { rateLimits, sanitizeInput, mongoSanitizeMiddleware } = require('./backen
 const app = express();
 
 // Connect to database
-connectDB();
-initializeDatabase();
+const startApp = async () => {
+    await connectDB();
+    await initializeDatabase();
+};
+startApp();
 
 // Middleware to log all requests
 app.use((req, res, next) => {
