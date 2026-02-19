@@ -973,6 +973,12 @@ body.nav-open {
   transition: 0.3s ease;
 }
 
+.language-selector option {
+  color: #1b4d3e; /* Dark green text for options */
+  background: white; /* Light background for options */
+}
+
+
 .language-selector:hover {
   background: rgba(255,255,255,0.25);
 }
